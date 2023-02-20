@@ -21,6 +21,7 @@ const getServices = async () => {
       headers: {
         'Authorization': `Api-Token ${API_TOKEN}`
       }
+      
     });
     return response.data;
   } catch (error) {
