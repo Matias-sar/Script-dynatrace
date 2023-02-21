@@ -1,3 +1,4 @@
+
 const readline = require('readline');
 const axios = require('axios');
 const excel = require('excel4node');
@@ -29,7 +30,7 @@ const getServices = async () => {
   }
 };
 
-const askForTypes = (callback) => {
+const askForTypes = (callback) => { 
   rl.question("Ingrese el nombre de la tecnologia en Mayuscula separada por commas Ej: JAVA,GO ('all' para filtrar todos) ", (types) => {
     callback(types.split(',').map(type => type.trim()));
     rl.close();
@@ -40,7 +41,7 @@ const askForTypes = (callback) => {
 
   //Filtrar los servicios no monitoreados y con restartRequired en true
   const services = await getServices();
-  const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true);
+  const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true  && !service.fromRelationships.isNetworkClientOf);
 
   askForTypes((types) => {
 
