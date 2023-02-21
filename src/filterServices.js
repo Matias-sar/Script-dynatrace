@@ -15,7 +15,7 @@ const filterServices = async () => {
       }
     });
     const services = response.data;
-    const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true  && !service.fromRelationships.isNetworkClientOf);
+    const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true);
     fs.writeFile('filteredServices.json', JSON.stringify(filteredServices, null, 2), (err) => {
       if (err) throw err;
       console.log('El archivo filteredServices.json ha sido creado');
