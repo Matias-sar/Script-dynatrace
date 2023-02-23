@@ -24,32 +24,32 @@ const getServices = async () => {
       }
       
     });
-    return response.data;
+    return response.data; 
   } catch (error) {
     console.log("Token no valido, revisa el URL_TENANT y el API_TOKEN en las variables de entorno en el archivo .env que esten correctamente escritas o revisa en Dynatrace para saber si el token existe o es valido");
   }
 };
 
 const askForTypes = (callback) => { 
-  rl.question("Ingrese el nombre de la tecnologia en Mayuscula separada por commas Ej: JAVA,GO ('all' para filtrar todos) ", (types) => {
+  rl.question("Ingrese el nombre de los servicios separados por commas Ej: servicio1,servicio2 ('all' para filtrar todos) ", (types) => {
     callback(types.split(',').map(type => type.trim()));
     rl.close();
   });
 };
 
 (async () => {
-
+        
   //Filtrar los servicios no monitoreados y con restartRequired en true
   const services = await getServices();
   const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true);
 
-  askForTypes((types) => {
-
+  askForTypes((services) => {
+    
     let filteredByTypes
-    if(types.includes('all')){
+    if(services.includes('all')){
       filteredByTypes = filteredServices
     }else{
-      filteredByTypes = filteredServices.filter(service => types.includes(service.softwareTechnologies[0].type))
+      filteredByTypes = filteredServices.filter(service => services.includes(service.discoveredName))
     }
 
     //Crear archivo excel

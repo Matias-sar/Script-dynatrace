@@ -1,3 +1,4 @@
+
 const readline = require('readline');
 const axios = require('axios');
 const excel = require('excel4node');
@@ -40,7 +41,7 @@ const askForTypes = (callback) => {
 
   //Filtrar los servicios no monitoreados y con restartRequired en true
   const services = await getServices();
-  const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true  );
+  const filteredServices = services.filter(service => !service.agent && service.monitoringState.restartRequired === true);
 
   askForTypes((types) => {
 
@@ -75,9 +76,9 @@ const askForTypes = (callback) => {
       workbook = new excel.Workbook()
       const workSheet = workbook.addWorksheet('Sheet 1');
 
-      var displayNameHeader = workSheet.cell(1, 1)
-      displayNameHeader.string('DISCOVEREBNAME')
-      displayNameHeader.style({font: {bold: true}})
+      var discoveredNameHeader = workSheet.cell(1, 1)
+      discoveredNameHeader.string('DICOVEREDNAME')
+      discoveredNameHeader.style({font: {bold: true}})
     
       var displayNameHeader = workSheet.cell(1, 2)
       displayNameHeader.string('DISPLAYNAME')
@@ -96,7 +97,7 @@ const askForTypes = (callback) => {
       typeRestart.style({font: {bold: true}})
 
       filteredByTypes.forEach((service, index) => {
-        workSheet.cell(index + 2, 1).string(service.discoveredName);
+        workSheet.cell(index + 2, 1).string(service.discoveredName)
         workSheet.cell(index + 2, 2).string(service.displayName);
         workSheet.cell(index + 2, 3).string(service.metadata.hostGroups);
         workSheet.cell(index + 2, 4).string(service.softwareTechnologies[0].type);
